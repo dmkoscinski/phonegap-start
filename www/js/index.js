@@ -20,7 +20,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
-        $('#gecko-target').append('<div>app.initialize</div>');
+        //$('#gecko-target').append('<div>app.initialize</div>');
     },
     // Bind Event Listeners
     //
