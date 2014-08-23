@@ -47,10 +47,10 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-        
+
         //go get something via ajax and dump it in gecko-target
         jQuery.get(
-            'https://portal.thinkgecko.com'
+            'http://www.thinkgecko.com'
             ,''
             ,function(data, textStatus, jqXHR) {
                 $('#gecko-target').append('<div>' + data + '</div>');
