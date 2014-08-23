@@ -20,6 +20,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.bindEvents();
+        $('#gecko-target').append('<div>app.initialize</div>');
     },
     // Bind Event Listeners
     //
@@ -37,6 +38,7 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
+        $('#gecko-target').append('<div>app.receivedEvent</div>');
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
@@ -49,9 +51,9 @@ var app = {
         //go get something via ajax and dump it in gecko-target
         jQuery.get(
             'https://portal.thinkgecko.com'
-            ,""
+            ,''
             ,function(data, textStatus, jqXHR) {
-                $('#gecko-target').text(data);
+                $('#gecko-target').append('<div>' + data + '</div>');
                 console.log('Received data');
             }
         );
