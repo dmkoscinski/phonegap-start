@@ -178,11 +178,13 @@ var GeckoWS = {
 var CFWebSockets = {
   go: function() {
     //ColdFusion.Event.registerOnLoad(this._cf_websockets_init_1408971150236);
+    //moved this to index.html instead
   },
 
-  _cf_websockets_init_1408971150236: function() {
-    mycfwebsocketobject = ColdFusion.WebSocket.init('mycfwebsocketobject','publishexample','D9453F56711EE71210D26C9E1683C0DF','publishdemochannel',mymessagehandler,null,null,null,'http://www.onlyaglance.com/testing/2/index.cfm');
-  }
+  //using the copy of this in index.html instead
+  //_cf_websockets_init_1408971150236: function() {
+  //  mycfwebsocketobject = ColdFusion.WebSocket.init('mycfwebsocketobject','publishexample','D9453F56711EE71210D26C9E1683C0DF','publishdemochannel',mymessagehandler,null,null,null,'http://www.onlyaglance.com/testing/2/index.cfm');
+  //}
 };
 
 function mymessagehandler( atoken) {
