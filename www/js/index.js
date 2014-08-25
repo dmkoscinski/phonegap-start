@@ -23,6 +23,7 @@ var app = {
         //$('#gecko-target').append('<div>app.initialize</div>');
         GeckoAJAX.go();
         CFWebSockets.go();
+        GeckoWS.go();
     },
     // Bind Event Listeners
     //
@@ -69,7 +70,107 @@ var GeckoAJAX = {
   }
 }
 
+var GeckoWS = {
+  ws: null
+  ,timerID: null
 
+  ,go: function() {
+      $(document).ready(function() {
+          $('.btnSend').on('click', function(e) {
+                  GeckoWS.Send();
+          });
+
+          $(document.body).on('keypress', function(e) {
+                  if ( e.keyCode == 13 ) {
+                      $('.btnSend').click();
+                  }
+          });
+
+          $('[name="GeckoWS_user"]').val("User" + Math.floor((Math.random() * 99) + 1));
+
+          GeckoWS.SetupReconnectLoop();
+      });
+  }
+
+  ,Connect: function() {
+      console.log("Connecting...");
+      this.ws = new WebSocket('ws://lamp1.geckogroup.net:9000/ws');
+      this.ws.onopen = function (evt) {
+          console.log("Connected to WebSocket server. readyState: " + JSON.stringify(GeckoWS.ws.readyState));
+          $('#GeckoWS_status').removeClass('Disconnected').addClass('Connected');
+          $('.btnSend').attr('disabled', false);
+      };
+      this.ws.onclose = function (evt) {
+          console.log("Disconnected");
+          $('#GeckoWS_status').removeClass('Connected').addClass('Disconnected');
+          $('.btnSend').attr('disabled', 'disabled');
+          GeckoWS.SetupReconnectLoop();
+      };
+      this.ws.onmessage = function (evt) {
+          console.log("Message received: data = " + JSON.stringify(evt.data));
+          var data;
+          try {
+                  eval("data = " + evt.data);
+          } catch (ex) {
+                  data = evt.data;
+          }
+
+          if ( data && data.user && data.message ) {
+                  $('#GeckoWS_messagelog').append('<div><b style="margin-right: 1em; ' + (data.user == $('[name="GeckoWS_user"]').val() ? 'color: blue;' : '') + '">' + data.user + '</b><span>' + data.message + '</span></div>');
+          } else {
+                  $('#GeckoWS_messagelog').append('<div>' + data + '</div>');
+          }
+          //document.getElementById('msg').innerHTML = evt.data;
+      };
+      this.ws.onerror = function (evt) {
+          console.log('Error occured: ' + evt.data);
+      };
+  }
+
+  ,SetupReconnectLoop: function() {
+      if (this.timerID) {
+              console.log("SetupReconnectLoop: timer already active, exiting");
+              return;
+      } else {
+              this.timerID = setInterval(this.Reconnect, 1000);
+      }
+  }
+
+  ,Reconnect: function() {
+      if( GeckoWS.ws ) console.log("Reconnect: readyState = " + GeckoWS.ws.readyState);
+
+      if ( GeckoWS.ws && GeckoWS.ws.readyState == 1 ) {
+              clearInterval(GeckoWS.timerID);
+              GeckoWS.timerID = null;
+              console.log("Reconnect: ws is open, cancelling reconnect loop");
+      } else {
+              GeckoWS.Connect();
+      }
+
+  }
+
+  ,Send: function() {
+      var message = {
+              user: $('[name="GeckoWS_user"]').val()
+              ,message: $('[name="GeckoWS_message"]').val()
+      };
+      //alert('btnSend.Click: ' + message);
+      /*jQuery.get(
+              '/notify'
+              ,{
+                      msg: JSON.stringify(message)
+              }
+              ,function(data, textStatus, jqXHR) {
+                      //console.log('Sent message: ' + data);
+              }
+      );*/
+      console.log('Sent message: ' + JSON.stringify(message));
+      this.ws.send(JSON.stringify(message));
+      $('[name="GeckoWS_message"]').val('');
+  }
+
+
+}
 
 
 //var mycfwebsocketobject;

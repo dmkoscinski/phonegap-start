@@ -78,13 +78,29 @@ var _cf_flash_policy_port = 1243;
             </div>
 
             <hr />
-            <div id="cf_websockets">
-              <h1>Say Hi!</h1>
-              <div>
-                Message: <input id ="message" type="text" /> User: <input id ="user" type="text" /> <input type="button" onclick="publishmessage();" value="Publish Message" />
-              </div>
-              <div id="cf_websockets_target" style="border: 1px solid silver; padding: 1em;"></div>
+            <div id="GeckoWS" style="text-align: left;">
+                <h1>Gecko Websocket demo</h1>
+                    <p>Check out JS console for status messages</p>
+                    <div>
+                            Status: <span id="GeckoWS_status">&nbsp;</span>
+                            <label>User:<input name="GeckoWS_user" type="text" value=""/></label>
+                            <br />
+                            <label>Message:<input name="GeckoWS_message" type="text" /></label>
+                            <button class="btnSend" disabled>Send</button>
+                    </div>
+                            <h3>Received Messages</h3>
+                <div id="GeckoWS_messagelog" style="border: 1px solid silver; padding: 1em; text-align: left;"></div>
             </div>
+
+<hr />
+<div id="cf_websockets">
+  <h1>CF Websocket demo</h1>
+  <div>
+    Message: <input id ="message" type="text" /> User: <input id ="user" type="text" /> <input type="button" onclick="publishmessage();" value="Publish Message" />
+  </div>
+  <div id="cf_websockets_target" style="border: 1px solid silver; padding: 1em;"></div>
+</div>
+
 
         </div>
         <script type="text/javascript" src="cordova.js"></script>

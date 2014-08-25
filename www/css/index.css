@@ -59,6 +59,19 @@ body {
                                    /* offset horizontal: half of text area width */
 }
 
+        #GeckoWS_status {
+                display: inline-block;
+                width: 50px;
+                background-color: gray;
+        }
+        #GeckoWS_status.Connected {
+                background-color: lightgreen;
+        }
+        #GeckoWS_status.Disconnected {
+                background-color: red;
+        }
+
+
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {
