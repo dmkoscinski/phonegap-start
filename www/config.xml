@@ -9,11 +9,11 @@
     <name>Hello World</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Proof of concept app that verifies a few PhoneGap features
     </description>
 
-    <author href="http://phonegap.com" email="support@phonegap.com">
-        PhoneGap Team
+    <author href="http://thinkgecko.com" email="helpdesk@thinkgecko.com">
+        Gecko Group
     </author>
 
     <!--
