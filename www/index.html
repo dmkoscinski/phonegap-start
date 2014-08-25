@@ -27,23 +27,71 @@
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
+
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript">
+/* <![CDATA[ */
+var _cf_loadingtexthtml = '<img alt=" " src="http://www.onlyaglance.com/CFIDE/scripts/ajax/resources/cf/images/loading.gif"/>';
+var _cf_contextpath = '';
+var _cf_ajaxscriptsrc = 'http://www.onlyaglance.com/CFIDE/scripts/ajax';
+var _cf_jsonprefix = '//';
+var _cf_websocket_port = 8575;
+var _cf_flash_policy_port = 1243;
+/* ]]> */
+        </script>
+
+        <script src="http://www.onlyaglance.com/CFIDE/scripts/ajax/messages/cfmessage.js"></script>
+        <script src="http://www.onlyaglance.com/CFIDE/scripts/ajax/package/cfajax.js"></script>
+        <script src="http://www.onlyaglance.com/CFIDE/scripts/ajax/package/cfwebsocketCore.js"></script>
+        <script src="http://www.onlyaglance.com/CFIDE/scripts/ajax/package/cfwebsocketChannel.js"></script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+	var mycfwebsocketobject;
+	_cf_websockets_init_1408971150236=function()
+	{
+		mycfwebsocketobject = ColdFusion.WebSocket.init('mycfwebsocketobject','publishexample','D9453F56711EE71210D26C9E1683C0DF','publishdemochannel',mymessagehandler,null,null,null,'/testing/2/index.cfm');
+	};ColdFusion.Event.registerOnLoad(_cf_websockets_init_1408971150236);
+/* ]]> */
+</script>
+
+
         <title>Hello World</title>
     </head>
+
     <body>
         <div class="app">
+
+            <div><img alt="logo" src="img/logo.png" /></div>
+
             <h1>PhoneGap</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-            <h3>Look for new stuff below</h3>
-            <div id="gecko-target" style="border: 1px solid silver; padding: 1em;"></div>
+
+
+            <hr />
+            <h1>Gecko AJAX to external site:</h1>
+            <div id="gecko-target" style="border: 1px solid silver; padding: 1em;">
+              This will be replaced by the contents of an external website.
+            </div>
+
+            <hr />
+            <div id="cf_websockets">
+              <h1>Say Hi!</h1>
+              <div>
+                Message: <input id ="message" type="text" /> User: <input id ="user" type="text" /> <input type="button" onclick="publishmessage();" value="Publish Message" />
+              </div>
+              <div id="cf_websockets_target" style="border: 1px solid silver; padding: 1em;"></div>
+            </div>
+
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
+
     </body>
 </html>

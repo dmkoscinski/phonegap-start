@@ -21,6 +21,8 @@ var app = {
     initialize: function() {
         this.bindEvents();
         //$('#gecko-target').append('<div>app.initialize</div>');
+        GeckoAJAX.go();
+        CFWebSockets.go();
     },
     // Bind Event Listeners
     //
@@ -35,6 +37,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -48,14 +51,70 @@ var app = {
 
         console.log('Received Event: ' + id);
 
-        //go get something via ajax and dump it in gecko-target
-        jQuery.get(
-            'http://www.thinkgecko.com'
-            ,''
-            ,function(data, textStatus, jqXHR) {
-                $('#gecko-target').append('<div>' + data + '</div>');
-                console.log('Received data');
-            }
-        );
     }
 };
+
+
+var GeckoAJAX = {
+  go: function() {
+    //go get something via ajax and dump it in gecko-target
+    jQuery.get(
+        'http://www.thinkgecko.com'
+        ,''
+        ,function(data, textStatus, jqXHR) {
+            $('#gecko-target').append('<div>' + data + '</div>');
+            console.log('Received data');
+        }
+    );
+  }
+}
+
+
+
+
+//var mycfwebsocketobject;
+
+var CFWebSockets = {
+  go: function() {
+    //ColdFusion.Event.registerOnLoad(this._cf_websockets_init_1408971150236);
+  },
+
+  _cf_websockets_init_1408971150236: function() {
+    mycfwebsocketobject = ColdFusion.WebSocket.init('mycfwebsocketobject','publishexample','D9453F56711EE71210D26C9E1683C0DF','publishdemochannel',mymessagehandler,null,null,null,'http://www.onlyaglance.com/testing/2/index.cfm');
+  }
+};
+
+function mymessagehandler( atoken) {
+		if (atoken.data != null) {
+			var message = atoken.data;
+			var txt = document.getElementById("cf_websockets_target");
+			txt.innerHTML += message + "<br>";
+		}
+}
+
+function publishmessage()	{
+		var msg =  "<b>" + document.getElementById("user").value +"</b>:  " + document.getElementById("message").value;
+
+		mycfwebsocketobject.publish("publishdemochannel",msg );
+}
+
+function publisharray() {
+		var myarr = new Array();
+		myarr[1]=document.getElementById("arr1").value;
+		myarr[2]=document.getElementById("arr2").value;
+		myarr[3]=document.getElementById("arr3").value;
+		mycfwebsocketobject.publish("publishdemochannel",myarr);
+}
+
+function publishobject() {
+		var myobj= new Object();
+		myobj.fname=document.getElementById("fn").value;
+		myobj.lname=document.getElementById("ln").value;
+		myobj.age=document.getElementById("age").value;
+		myobj.gender=document.getElementById("gender").value;
+		mycfwebsocketobject.publish("publishdemochannel",myobj);
+}
+
+function inpublish() {
+		mycfwebsocketobject.invokeAndPublish("publishdemochannel", "employee", "processMessage",[389,"Hello "]);
+}
