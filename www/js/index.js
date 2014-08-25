@@ -94,7 +94,7 @@ var GeckoWS = {
 
   ,Connect: function() {
       console.log("Connecting...");
-      this.ws = new WebSocket('ws://lamp1.geckogroup.net:9000/ws');
+      this.ws = new WebSocket('ws://lamp2.geckogroup.net:9000/ws');
       this.ws.onopen = function (evt) {
           console.log("Connected to WebSocket server. readyState: " + JSON.stringify(GeckoWS.ws.readyState));
           $('#GeckoWS_status').removeClass('Disconnected').addClass('Connected');
